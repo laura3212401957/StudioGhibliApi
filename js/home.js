@@ -1,6 +1,6 @@
 function Home(peliculas) {
     var root = document.getElementById("root");
-    root.innerHTML = ''; // Limpiamos el contenido anterior
+    root.innerHTML = 'Home'; // se limpia el contenido previo
     
     for(var i = 0; i < peliculas.length; i++){
         var id = peliculas[i].id;
