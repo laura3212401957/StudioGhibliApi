@@ -1,18 +1,53 @@
-function Home(peliculas) {
-    var root = document.getElementById("root");
-    root.innerHTML = 'Home'; // se limpia el contenido previo
+// Archivo: js/home.js (Solución Final)
+
+function generarLista(arrayPersonajes){
+    const contenedorLista = document.createElement("div");
+
+    contenedorLista.classList.add("c-contenedor-Lista");
+    contenedorLista.id = "la-lista";
     
-    for(var i = 0; i < peliculas.length; i++){
-        var id = peliculas[i].id;
-        var titulo = peliculas[i].title;
-        // Aquí se define la variable 'imagen'
-        var imagen = peliculas[i].image;
+    // recorre el array de personajes
+    for(let i = 0; i < arrayPersonajes.length; i++){
+        const personaje = arrayPersonajes[i];
+        const id = personaje.id; 
+        const nombre = personaje.name;
         
-        root.innerHTML += `
-            <div class="una-pelicula" onclick="detallesPelicula('${id}')">
-                <p>${titulo}</p>
-                <img src="${imagen}" width="auto" height="200" loading="lazy" alt="${titulo}">
-            </div>
-        `;
-    } 
+        // contenedor principal del personaje
+        const divPersonaje = document.createElement("div");
+        divPersonaje.classList.add("una-persona");
+        // Aseguramos que el clic llame al detalle del personaje
+        divPersonaje.onclick = () => detallesPelicula(id); 
+
+        // Imagen: Utilizamos el placeholder que te funciona
+        const img = document.createElement("img");
+        img.src = `https://placehold.co/60x60?text=${nombre}`;
+        img.alt = nombre;
+        img.height = 60; 
+        img.width = 60;
+        img.loading = "lazy";
+
+        
+        // Con la etiqueta p creamos el nombre del personaje
+        const pNombre = document.createElement("p");
+        // ¡SOLUCIÓN! Solo mostramos el nombre del personaje.
+        pNombre.textContent = nombre; 
+        
+        
+        divPersonaje.appendChild(pNombre);
+        divPersonaje.appendChild(img);
+
+        contenedorLista.appendChild(divPersonaje);
+    }
+
+    return contenedorLista;
+} 
+
+function Home() {
+    document.getElementById("root").innerHTML ="";
+    var root = document.getElementById("root");
+
+    // Llama a la función generarLista 
+    const contenedorLista = generarLista(personajes);
+
+    root.appendChild(contenedorLista);
 }

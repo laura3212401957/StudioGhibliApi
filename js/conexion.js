@@ -1,20 +1,26 @@
-   let peliculas = [];
-    let totalPeliculas = 22; // Hay 22 películas en total en la API
+// Archivo: js/conexion.js (Corregido: Devuelve datos y llama a Home correctamente)
 
-// Conexión para obtener la lista de Peliculas
+let personajes = [];
+let totalPersonajes = 50; 
+
+// Conexión para obtener la lista de personajes
 async function conexion() {
-  const res = await fetch(`https://ghibliapi.vercel.app/films?limit=${totalPeliculas}`);
+  const res = await fetch(`https://ghibliapi.vercel.app/people?limit=${totalPersonajes}`);
   const data = await res.json();
-  return data;
+  
+  // ¡CORRECCIÓN CRÍTICA! La API de Ghibli devuelve el array directamente.
+  // data.results es incorrecto para este endpoint.
+  return data; 
 }
 
-// Cargar todos las peliculas al iniciar
+// Cargar todos los personajes al iniciar
 async function General() {
-  if (peliculas.length === 0) {
-    peliculas = await conexion();
+  if (personajes.length === 0) {
+    personajes = await conexion();
   }
-  Home(peliculas);
-  console.log(peliculas)
+  
+  // CORRECCIÓN: Llamamos a Home() sin argumentos, ya que Home usa la variable global 'personajes'.
+  Home(); 
 }
 
-General();
+General()
