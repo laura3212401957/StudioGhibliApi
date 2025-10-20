@@ -1,53 +1,105 @@
-// Archivo: js/home.js (Solución Final)
+// Variable para guardar el array 
+let arrayPersonajesVisible = []; 
 
-function generarLista(arrayPersonajes){
-    const contenedorLista = document.createElement("div");
+function generarHeader() {
+    const header = document.createElement('header');
+    header.id = 'main-header'; 
 
-    contenedorLista.classList.add("c-contenedor-Lista");
-    contenedorLista.id = "la-lista";
+    const logoContainer = document.createElement('div');
+    logoContainer.classList.add('logo-container');
     
-    // recorre el array de personajes
-    for(let i = 0; i < arrayPersonajes.length; i++){
-        const personaje = arrayPersonajes[i];
-        const id = personaje.id; 
+    const title = document.createElement('h1');
+    title.textContent = 'STUDIO GHIBLI';
+    
+    logoContainer.appendChild(title);
+    header.appendChild(logoContainer);
+    document.body.prepend(header);
+}
+
+
+function generarLista(arrayPersonajes) {
+    const contenedorLista = document.createElement("div");
+    contenedorLista.classList.add("c-contenedor-lista");
+    contenedorLista.id = "la-lista";
+
+    arrayPersonajes.forEach(personaje => {
+        const id = personaje.id;
         const nombre = personaje.name;
         
-        // contenedor principal del personaje
         const divPersonaje = document.createElement("div");
-        divPersonaje.classList.add("una-persona");
-        // Aseguramos que el clic llame al detalle del personaje
-        divPersonaje.onclick = () => detallesPelicula(id); 
+        divPersonaje.classList.add("c-lista-personaje", `persona-${id}`);
+      
+        divPersonaje.onclick = () => detalles(id); 
 
-        // Imagen: Utilizamos el placeholder que te funciona
-        const img = document.createElement("img");
-        img.src = `https://placehold.co/60x60?text=${nombre}`;
-        img.alt = nombre;
-        img.height = 60; 
-        img.width = 60;
-        img.loading = "lazy";
-
-        
-        // Con la etiqueta p creamos el nombre del personaje
         const pNombre = document.createElement("p");
-        // ¡SOLUCIÓN! Solo mostramos el nombre del personaje.
-        pNombre.textContent = nombre; 
-        
+        pNombre.textContent = nombre;
+
+        const img = document.createElement("img");
+        img.src = `https://placehold.co/60x60?text=${nombre.charAt(0)}`; 
+        img.width = 60;
+        img.height = 60;
+        img.loading = "lazy";
+        img.alt = nombre;
         
         divPersonaje.appendChild(pNombre);
         divPersonaje.appendChild(img);
-
         contenedorLista.appendChild(divPersonaje);
-    }
-
+    });
     return contenedorLista;
-} 
+}
 
-function Home() {
-    document.getElementById("root").innerHTML ="";
-    var root = document.getElementById("root");
+// Buscador
+function buscadorfuncion(sza) {
+    const root = document.getElementById("root");
+    const listaExistente = document.getElementById("la-lista");
+    if (listaExistente) listaExistente.remove();
 
-    // Llama a la función generarLista 
-    const contenedorLista = generarLista(personajes);
+    const arrayBase = arrayPersonajesVisible; 
 
+    const arrayParaMostrar = sza.length >= 3
+        ? arrayBase.filter(personaje => personaje.name.toLowerCase().includes(sza.toLowerCase()))
+        : arrayBase;
+
+    const nuevoContenedorLista = generarLista(arrayParaMostrar);
+    root.appendChild(nuevoContenedorLista);
+}
+
+// Home principal: Acepta un array opcional (dataArray) para mostrar el filtro
+function Home(dataArray) {
+    const root = document.getElementById("root");
+    root.innerHTML = "";
+
+    const arrayFinal = dataArray || window.personajes || []; 
+    arrayPersonajesVisible = arrayFinal; 
+
+    // Buscador
+    const buscador = document.createElement("input");
+    buscador.classList.add("c-buscador");
+    buscador.type = "text";
+    buscador.placeholder = "Buscar personaje...";
+    buscador.addEventListener("input", () => {
+        buscadorfuncion(buscador.value);
+    });
+
+    // Contenedor de filtros
+    const tipos = ["All", "Human", "Spirit", "Dragon", "Cat"]; 
+    const contenedorFiltro = document.createElement("div");
+    contenedorFiltro.classList.add("tipos-container");
+
+    tipos.forEach(tipo => {
+        const btn = document.createElement("button");
+        btn.textContent = tipo;
+        btn.addEventListener("click", () => {
+            FiltroConexion(tipo); 
+        });
+        contenedorFiltro.appendChild(btn);
+    });
+
+    // Contenedor lista
+    const contenedorLista = generarLista(arrayFinal);
+
+    
+    root.appendChild(buscador);
+    root.appendChild(contenedorFiltro);
     root.appendChild(contenedorLista);
 }

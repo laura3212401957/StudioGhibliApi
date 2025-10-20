@@ -1,3 +1,200 @@
-body{
-    background: white;
+/* VARIABLES DE COLOR */
+:root {
+    --color-ghibli-verde: #90d4c8; /* Verde/Menta claro típico de Ghibli */
+    --color-ghibli-gris: #3d3d3d;   /* Gris oscuro para texto */
+    --color-fondo-claro: #fcfcfc;  /* Fondo blanco casi puro */
+    --color-borde: #e0e0e0;        /* Borde sutil */
+    --color-acento: #e47c7c;       /* Rojo/Rosa suave para el acento */
+    --color-sombra: rgba(0, 0, 0, 0.05);
+}
+
+/* ---------------------------------- */
+/* 1. ESTILOS GENERALES Y TIPOGRAFÍA */
+/* ---------------------------------- */
+
+body {
+    font-family: Arial, sans-serif; /* Idealmente, usar una fuente bonita como 'Open Sans' */
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-fondo-claro);
+    color: var(--color-ghibli-gris);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--color-ghibli-verde);
+    padding: 20px 40px;
+    box-shadow: 0 4px 6px var(--color-sombra);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    color: white;
+    font-size: 2em;
+    letter-spacing: 2px;
+}
+
+/* ---------------------------------- */
+/* 2. CONTENEDOR PRINCIPAL (MAIN) */
+/* ---------------------------------- */
+
+#root {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 20px auto;
+    width: 100%;
+    flex-grow: 1; /* Permite que ocupe el espacio restante */
+}
+
+/* ---------------------------------- */
+/* 3. BOTONES Y BUSCADOR (Filtros) */
+/* ---------------------------------- */
+
+.c-buscador {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box; /* Incluye padding en el width */
+    transition: border-color 0.3s;
+}
+
+.c-buscador:focus {
+    border-color: var(--color-ghibli-verde);
+    outline: none;
+    box-shadow: 0 0 5px rgba(144, 212, 200, 0.5);
+}
+
+.tipos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+button {
+    background-color: white;
+    color: var(--color-ghibli-gris);
+    border: 1px solid var(--color-ghibli-verde);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--color-ghibli-verde);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px var(--color-sombra);
+}
+
+header button {
+    background-color: white;
+    color: var(--color-ghibli-gris);
+}
+
+header button:hover {
+    background-color: var(--color-acento);
+    color: white;
+    border-color: var(--color-acento);
+}
+
+/* ---------------------------------- */
+/* 4. LISTA DE PERSONAJES (HOME) */
+/* ---------------------------------- */
+
+.c-contenedor-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.c-lista-personaje {
+    background-color: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 10px var(--color-sombra);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-left: 5px solid var(--color-ghibli-verde);
+}
+
+.c-lista-personaje:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px var(--color-sombra);
+}
+
+.c-lista-personaje img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 2px solid var(--color-borde);
+}
+
+.c-lista-personaje p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+/* ---------------------------------- */
+/* 5. VISTA DE DETALLES */
+/* ---------------------------------- */
+
+.c-detalle {
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px var(--color-sombra);
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.c-detalle h2 {
+    color: var(--color-ghibli-verde);
+    font-size: 2.2em;
+    margin-bottom: 15px;
+}
+
+.c-detalle img {
+    border-radius: 10px;
+    margin: 20px 0;
+    width: 150px;
+    height: 200px;
+    object-fit: cover;
+    border: 3px solid var(--color-acento);
+}
+
+.c-detalle p {
+    font-size: 1.1em;
+    margin: 10px 0;
+}
+
+.c-detalle button {
+    margin-top: 20px;
+    background-color: var(--color-acento);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    font-size: 1.1em;
+}
+
+.c-detalle button:hover {
+    background-color: #d66464;
 }
